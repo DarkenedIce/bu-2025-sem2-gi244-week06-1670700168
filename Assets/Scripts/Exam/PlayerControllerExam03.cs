@@ -20,6 +20,14 @@ public class PlayerControllerExam03 : MonoBehaviour
         shootAction = InputSystem.actions.FindAction("Shoot");
     }
 
+    private void Start()
+    {
+        if (enableAutoFireMode)
+        {
+            InvokeRepeating("Shoot", 0.1f, autoFireInterval);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -35,9 +43,14 @@ public class PlayerControllerExam03 : MonoBehaviour
             transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
         }
 
-        if (shootAction.triggered)
+        if (shootAction.triggered && !enableAutoFireMode)
         {
             Instantiate(projectilePrefab, transform.position, transform.rotation);
         }
+    }
+
+    void Shoot()
+    {
+        Instantiate(projectilePrefab, transform.position, transform.rotation);
     }
 }
